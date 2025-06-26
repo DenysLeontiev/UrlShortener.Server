@@ -26,7 +26,7 @@ public class UrlsController : BaseApiController
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UrlDto>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<UrlDto>>> Get([FromRoute] UrlParams urlParams)
+    public async Task<ActionResult<IEnumerable<UrlDto>>> Get([FromQuery] UrlParams urlParams)
     {
         var paginatedUrls = await _urlRepository.GetUrlsAsync(urlParams);
 
