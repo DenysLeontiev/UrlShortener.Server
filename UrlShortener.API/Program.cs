@@ -84,10 +84,10 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddAuthentication(cfg =>
-{
-    cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+builder.Services.AddAuthentication(options => {
+    //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(opts =>
 {
     opts.TokenValidationParameters = new TokenValidationParameters
@@ -120,6 +120,16 @@ if (app.Environment.IsDevelopment())
 app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(builder.Configuration["JWT:ClientUrl"]!, builder.Configuration["JWT:Issuer"]!);
+});
+
+app.MapGet("{code}", async (string code, IUrlRepository urlRepository) =>
+{
+    var shortenedUrl = await urlRepository.GetOriginalUrl(code);
+    if (shortenedUrl == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Redirect(shortenedUrl.OriginalUrl);
 });
 
 app.UseHttpsRedirection();

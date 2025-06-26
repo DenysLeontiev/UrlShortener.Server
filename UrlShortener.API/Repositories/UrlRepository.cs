@@ -42,6 +42,14 @@ public class UrlRepository : IUrlRepository
         return url!;
     }
 
+    public async Task<Url> GetOriginalUrl(string code)
+    {
+        var url = await _dbContext.Urls
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Code!.Equals(code));
+
+        return url!;
+    }
 
     public async Task<Url> CreateShortenUrl(string url, string currentUserId)
     {
@@ -52,7 +60,7 @@ public class UrlRepository : IUrlRepository
             Id = Guid.NewGuid().ToString(),
             OriginalUrl = url,
             Code = code,
-            ShortenUrl = $"{_httpContextAccessor.HttpContext!.Request.Scheme}://${_httpContextAccessor.HttpContext!.Request.Host}/api/{code}",
+            ShortenUrl = $"{_httpContextAccessor.HttpContext!.Request.Scheme}://{_httpContextAccessor.HttpContext!.Request.Host}/{code}",
             UserId = currentUserId,
         };
 

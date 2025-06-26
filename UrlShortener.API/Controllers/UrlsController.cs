@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.API.ExtensionMethods;
@@ -8,7 +9,7 @@ using UrlShortener.API.Pagination;
 
 namespace UrlShortener.API.Controllers;
 
-[Authorize]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class UrlsController : BaseApiController
 {
     private readonly IUrlRepository _urlRepository;
