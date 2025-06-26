@@ -147,5 +147,6 @@ var contextSeedService = scope.ServiceProvider.GetRequiredService<ContextSeedSer
 await contextSeedService.ApplyPendingMigrationsAsync();
 
 await contextSeedService.SeedUserRolesAsync();
+await contextSeedService.SeedAdminUser();
 
 app.Run();
