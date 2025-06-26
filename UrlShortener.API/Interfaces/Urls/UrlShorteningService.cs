@@ -17,7 +17,7 @@ public class UrlShorteningService
         _dbContext = dbContext;
     }
 
-    public async Task<string> GenerateUniqueCode()
+    public async Task<string> GenerateUniqueCodeAsync()
     {
         var codeChars = new char[NUMBER_OF_SYMBOLS_IN_SHORT_LINK];
 

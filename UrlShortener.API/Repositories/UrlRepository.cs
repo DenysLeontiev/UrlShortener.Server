@@ -22,7 +22,7 @@ public class UrlRepository : IUrlRepository
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<PagedList<Url>> GetUrls(UrlParams urlParams)
+    public async Task<PagedList<Url>> GetUrlsAsync(UrlParams urlParams)
     {
         var urlsQuery = _dbContext.Urls
             .Include(x => x.User)
@@ -32,7 +32,7 @@ public class UrlRepository : IUrlRepository
         return await PagedList<Url>.CreateAsync(urlsQuery, urlParams.PageNumber, urlParams.PageSize);
     }
 
-    public async Task<Url> GetById(string id)
+    public async Task<Url> GetByIdAsync(string id)
     {
         var url = await _dbContext.Urls
             .Include(x => x.User)
@@ -42,7 +42,7 @@ public class UrlRepository : IUrlRepository
         return url!;
     }
 
-    public async Task<Url> GetOriginalUrl(string code)
+    public async Task<Url> GetOriginalUrlAsync(string code)
     {
         var url = await _dbContext.Urls
             .AsNoTracking()
@@ -51,9 +51,9 @@ public class UrlRepository : IUrlRepository
         return url!;
     }
 
-    public async Task<Url> CreateShortenUrl(string url, string currentUserId)
+    public async Task<Url> CreateShortenUrlAsync(string url, string currentUserId)
     {
-        var code = await _urlShorteningService.GenerateUniqueCode();
+        var code = await _urlShorteningService.GenerateUniqueCodeAsync();
 
         var shortenedUrl = new Url
         {
@@ -69,5 +69,15 @@ public class UrlRepository : IUrlRepository
         await _dbContext.SaveChangesAsync();
 
         return shortenedUrl;
+    }
+
+    public async Task DeleteShortenedUrlByIdAsync(string id)
+    {
+        var urlToDelete = await _dbContext.Urls
+            .FirstOrDefaultAsync(x => x.Id!.Equals(id));
+
+        _dbContext.Urls.Remove(urlToDelete!);
+
+        await _dbContext.SaveChangesAsync();
     }
 }

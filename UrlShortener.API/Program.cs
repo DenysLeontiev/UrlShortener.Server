@@ -124,7 +124,7 @@ app.UseCors(opt =>
 
 app.MapGet("{code}", async (string code, IUrlRepository urlRepository) =>
 {
-    var shortenedUrl = await urlRepository.GetOriginalUrl(code);
+    var shortenedUrl = await urlRepository.GetOriginalUrlAsync(code);
     if (shortenedUrl == null)
     {
         return Results.NotFound();

@@ -28,7 +28,7 @@ public class UrlsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<UrlDto>>> Get([FromRoute] UrlParams urlParams)
     {
-        var paginatedUrls = await _urlRepository.GetUrls(urlParams);
+        var paginatedUrls = await _urlRepository.GetUrlsAsync(urlParams);
 
         Response.AddPaginationHeaders(new PaginationHeader(
             paginatedUrls.CurrentPage,
@@ -47,7 +47,7 @@ public class UrlsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UrlDto>> GetById(string id)
     {
-        var shortenedUrl = await _urlRepository.GetById(id);
+        var shortenedUrl = await _urlRepository.GetByIdAsync(id);
 
         var mappedShortenedUrl = _mapper.Map<UrlDto>(shortenedUrl);
 
@@ -65,10 +65,29 @@ public class UrlsController : BaseApiController
         }
 
         string currentUserId = User.GetUserId()!;
-        var shortenedUrl = await _urlRepository.CreateShortenUrl(shortenedUrlRequest.Url, currentUserId);
+        var shortenedUrl = await _urlRepository.CreateShortenUrlAsync(shortenedUrlRequest.Url, currentUserId);
 
         var mappedShortenedUrl = _mapper.Map<UrlDto>(shortenedUrl);
 
         return CreatedAtAction(nameof(GetById), new { id = mappedShortenedUrl.Id }, mappedShortenedUrl);
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UrlDto))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete(string id)
+    {
+        var url = await _urlRepository.GetByIdAsync(id);
+        var currentUserId = User.GetUserId()!;
+
+        if(!url.UserId.Equals(currentUserId))
+        {
+            return Forbid();
+        }
+
+        await _urlRepository.DeleteShortenedUrlByIdAsync(id);
+        return Ok();
     }
 }
