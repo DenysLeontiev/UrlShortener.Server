@@ -4,7 +4,7 @@ namespace UrlShortener.API.Pagination;
 
 public class PagedList<T> : List<T> where T : class
 {
-    private PagedList(List<T> items, int count, int pageNumber, int pageSize)
+    public PagedList(List<T> items, int count, int pageNumber, int pageSize)
     {
         CurrentPage = pageNumber;
         PageSize = pageSize;
