@@ -73,18 +73,11 @@ public class UrlRepository : IUrlRepository
 
     public async Task DeleteShortenedUrlByIdAsync(string id)
     {
-        var urlToDelete = await _dbContext.Urls
-            .FirstOrDefaultAsync(x => x.Id!.Equals(id));
-
-        _dbContext.Urls.Remove(urlToDelete!);
-
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Urls.Where(x => x.Id.Equals(id)).ExecuteDeleteAsync();
     }
 
     public async Task DeleteAllAsync()
     {
         await _dbContext.Urls.ExecuteDeleteAsync();
-
-        await _dbContext.SaveChangesAsync();
     }
 }
