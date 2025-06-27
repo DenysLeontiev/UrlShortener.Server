@@ -37,5 +37,6 @@ public class UrlShortenerDbContext : IdentityDbContext<User>
     }
 
     public DbSet<Url> Urls { get; set; }
+    public DbSet<AboutPage> AboutPages { get; set; }
 }
 

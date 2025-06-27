@@ -1,5 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using UrlShortener.API.Data;
 using UrlShortener.API.ExtensionMethods;
 using UrlShortener.API.Interfaces.Persistence;
+using UrlShortener.API.Models;
+using UrlShortener.API.Repositories;
 using UrlShortener.API.Services.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,5 +62,7 @@ await contextSeedService.ApplyPendingMigrationsAsync();
 
 await contextSeedService.SeedUserRolesAsync();
 await contextSeedService.SeedAdminUser();
+
+await contextSeedService.SeedAboutPage();
 
 app.Run();

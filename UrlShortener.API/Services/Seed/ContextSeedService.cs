@@ -24,6 +24,28 @@ public class ContextSeedService
         _roleManager = roleManager;
     }
 
+    public async Task SeedAboutPage()
+    {
+        if(!await _dbContext.AboutPages.AnyAsync())
+        {
+            var aboutPageToSeedContent = "Our system generates a <strong>7-character code</strong> from letters and numbers, ensuring it’s unique by\r\n        checking the database. Then, it combines that code with your domain to create your short URL.";
+
+            string adminUserName = _configuration.GetValue<string>("AdminAccountCredentials:UserName")!;
+            var adminUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.NormalizedUserName.Equals(adminUserName.ToUpper()));
+
+            var aboutPageToSeed = new AboutPage
+            {
+                Id = Guid.NewGuid().ToString(),
+                Content = aboutPageToSeedContent,
+                EditedById = adminUser.Id
+            };
+
+            await _dbContext.AboutPages.AddAsync(aboutPageToSeed);
+
+            await _dbContext.SaveChangesAsync();
+        }   
+    }
+
     public async Task ApplyPendingMigrationsAsync()
     {
         var pendingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();

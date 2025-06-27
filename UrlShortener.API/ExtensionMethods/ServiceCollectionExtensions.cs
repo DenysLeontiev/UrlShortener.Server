@@ -16,8 +16,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ContextSeedService>();
         services.AddScoped<IUrlRepository, UrlRepository>();
         services.AddScoped<UrlShorteningService>();
+        services.AddScoped<IAboutPageRepository, AboutPageRepository>();
+
         services.AddAutoMapper(typeof(Program));
         services.AddHttpContextAccessor();
+
         services.ConfigureApplicationCookie(options =>
         {
             options.Events.OnRedirectToLogin = context =>
@@ -31,6 +34,7 @@ public static class ServiceCollectionExtensions
                 return Task.CompletedTask;
             };
         });
+
         return services;
     }
 }

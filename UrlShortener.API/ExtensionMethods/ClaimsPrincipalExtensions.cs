@@ -6,7 +6,7 @@ public static class ClaimsPrincipalExtensions
 {
     public static string GetCurrentUserName(this ClaimsPrincipal user) //NameId == ClaimTypes.Name
     {
-        return user.FindFirst("name")?.Value;
+        return user.FindFirst("name")?.Value!;
     }
 
     public static string? GetUserId(this ClaimsPrincipal user)
