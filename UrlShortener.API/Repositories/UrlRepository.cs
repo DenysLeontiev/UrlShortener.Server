@@ -80,4 +80,11 @@ public class UrlRepository : IUrlRepository
 
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task DeleteAllAsync()
+    {
+        await _dbContext.Urls.ExecuteDeleteAsync();
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

@@ -10,4 +10,5 @@ public interface IUrlRepository
     Task<Url> GetOriginalUrlAsync(string code);
     Task<Url> CreateShortenUrlAsync(string url, string currentUserId);
     Task DeleteShortenedUrlByIdAsync(string id);
+    Task DeleteAllAsync();
 }

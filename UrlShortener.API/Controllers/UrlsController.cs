@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.API.ExtensionMethods;
 using UrlShortener.API.Interfaces.Persistence;
+using UrlShortener.API.Models.Consts;
 using UrlShortener.API.Models.DTOs.Urls;
 using UrlShortener.API.Pagination;
 
@@ -73,7 +74,7 @@ public class UrlsController : BaseApiController
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UrlDto))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,10 +85,20 @@ public class UrlsController : BaseApiController
 
         if(!url.UserId.Equals(currentUserId))
         {
-            return Forbid();
+            return NoContent();
         }
 
         await _urlRepository.DeleteShortenedUrlByIdAsync(id);
         return Ok();
+    }
+
+    [Authorize(Roles = DbRolesConsts.AdminRole)]
+    [HttpDelete("delete-all")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> DeleteAll()
+    {
+        await _urlRepository.DeleteAllAsync();
+
+        return NoContent();
     }
 }
