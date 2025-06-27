@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.API", "UrlShortener.API\UrlShortener.API.csproj", "{36294947-AB19-40DB-AABB-7ABA0A716A38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.AdminPanel", "UrlShortener.AdminPanel\UrlShortener.AdminPanel.csproj", "{7599F858-9456-4B8D-B937-D908F19998F6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Tests", "UrlShortener.Tests\UrlShortener.Tests.csproj", "{EABD334A-EC98-4E20-A160-DB3FB06DD4F6}"
 EndProject
 Global
@@ -14,21 +12,17 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{36294947-AB19-40DB-AABB-7ABA0A716A38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36294947-AB19-40DB-AABB-7ABA0A716A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36294947-AB19-40DB-AABB-7ABA0A716A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36294947-AB19-40DB-AABB-7ABA0A716A38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7599F858-9456-4B8D-B937-D908F19998F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7599F858-9456-4B8D-B937-D908F19998F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7599F858-9456-4B8D-B937-D908F19998F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7599F858-9456-4B8D-B937-D908F19998F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EABD334A-EC98-4E20-A160-DB3FB06DD4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EABD334A-EC98-4E20-A160-DB3FB06DD4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EABD334A-EC98-4E20-A160-DB3FB06DD4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EABD334A-EC98-4E20-A160-DB3FB06DD4F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
